@@ -6,11 +6,11 @@ Học kỳ 2, Năm học 2023-2024
 
 **Họ tên SV 1**: Nguyễn Đức Duy Khang
 
-**MSSV 2**:
+**MSSV 2**: B2014740
 
-**Họ tên SV 2**:
+**Họ tên SV 2**: Nguyễn Nhật Hào
 
 **Lớp học phần**: CT48402
 
-**Tên dự án**:
+**Tên dự án**: App bán hàng
 
