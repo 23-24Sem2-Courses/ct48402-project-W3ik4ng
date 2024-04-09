@@ -15,7 +15,9 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
-          onPressed: (){},
+          onPressed: (){
+
+          },
         ),
       ),
       body: SingleChildScrollView(
