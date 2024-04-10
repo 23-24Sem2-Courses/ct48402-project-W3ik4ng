@@ -66,11 +66,23 @@ class ItemInfoCard extends StatelessWidget {
               height: 80,
             ),
           ),
-          title: Text(cartItem.title),
-          subtitle: Text('Total: ${(cartItem.price * cartItem.quantity)} \ VND'),
-          trailing: Text(
-            '${cartItem.quantity} x ${cartItem.price}\ VND',
-            style: Theme.of(context).textTheme.titleMedium,
+          title: Text(cartItem.title,
+                      style: TextStyle(fontSize: 25,),),
+          subtitle: Text('Giá: ${(cartItem.price )} \ VND',
+                        ),
+          trailing: Column(
+            children: <Widget>[
+              Text(
+                'Số lượng: ${ cartItem.quantity}',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+
+              Text(
+                'Tổng: ${cartItem.price * cartItem.quantity}\ VND',
+                  style: TextStyle(color: Colors.redAccent, fontSize: 16,)
+
+              ),
+            ],
           ),
         ),
       ),
