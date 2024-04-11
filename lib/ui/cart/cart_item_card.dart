@@ -59,40 +59,51 @@ class _ItemInfoCardState extends State<ItemInfoCard> {
   Widget build(BuildContext context){
     return Card(
       margin: const EdgeInsets.symmetric(
-        horizontal: 15,
+        horizontal: 5,
         vertical: 4,
-      ) ,
+      ),
       child: Padding (
         padding: const EdgeInsets.all(8),
         child: ListTile(
-          leading: Checkbox(
-            value: isSelected, // Set the value of the checkbox
-            onChanged: (value) {
-              setState(() {
-                isSelected = value!; // Update the checkbox state when the user taps on it
-              });
-            },
+          leading: Container(
+            width: 0, // Set the width of the leading container to the width of the checkbox
+            child: Column(
+              children: [
+                Checkbox(
+                  value: isSelected, // Set the value of the checkbox
+                  onChanged: (value) {
+                    setState(() {
+                      isSelected = value!; // Update the checkbox state when the user taps on it
+                    });
+                  },
+                ),
+              ],
+            ),
           ),
           title: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Image.network(
-                  widget.cartItem.image,
-                  fit: BoxFit.cover,
-                  width: 80,
-                  height: 80,
+              Container(
+                width: 60, // Set the width of the container to the width of the image
+                padding: EdgeInsets.zero, // Remove any extra spacing
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.network(
+                    widget.cartItem.image,
+                    fit: BoxFit.cover,
+                    width: 60,
+                    height: 80,
+                  ),
                 ),
               ),
-              SizedBox(width: 16),
+              SizedBox(width: 4),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(widget.cartItem.title,
-                    style: TextStyle(fontSize: 25,),),
+                    style: TextStyle(fontSize: 22,),),
                   SizedBox(height: 8),
-                  Text('Giá: ${(widget.cartItem.price )} \ VND',
+                  Text('${(widget.cartItem.price )}\ VND',
                     style: TextStyle(fontSize: 16),),
                 ],
               ),

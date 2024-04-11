@@ -22,8 +22,8 @@ class _OrderItemCardState extends State<OrderItemCard> {
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.all(5),
+            margin: const EdgeInsets.only(right: 0),
             child: Image.network(
               widget.order.image,
               height: 100,
@@ -117,9 +117,10 @@ class OrderSummary extends StatelessWidget {
     return ListTile(
       titleTextStyle: Theme.of(context).textTheme.titleLarge,
       title: Column(
+        mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('${order.title}',style: TextStyle(fontSize: 30),),
+            Text('${order.title}',style: TextStyle(fontSize: 25, ),),
 
             Text('${priceProduct}\ VND',
                 style: TextStyle(fontSize: 18)),
@@ -139,7 +140,7 @@ class OrderSummary extends StatelessWidget {
           ),
 
         Text(
-        'Thành tiền: ${order.amount.toStringAsFixed(2)}\ VND',
+        '${order.amount.toStringAsFixed(2)}\ VND',
         style: const TextStyle(
         fontSize: 18,
         color: Colors.red,

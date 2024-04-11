@@ -14,11 +14,7 @@ class CartScreen extends StatelessWidget{
     final cart = CartManager();
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: (){
-            Navigator.of(context).pop();
-          },
-        ),
+
         title: const Text('You cart'),
         shadowColor: Colors.black,
           actions: <Widget>[
@@ -40,39 +36,65 @@ class CartScreen extends StatelessWidget{
 
           const SizedBox(height: 10,),
           Container(
-          height: 300,
+          height: 120,
             child: CartItemList(cart),
           )
         ],
       ),
-      bottomNavigationBar: NavigationBar(
-        destinations: [
-          CartSummary(
-            cart: cart,
-            onOrderNowPressed: (){
-              print('An order has been added');
-            },
-          ),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(0),
+        height: 60,
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                height: 60,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(color: Colors.black12),
 
-          Container(
-            color: Colors.red,
-            height: 80,
-            child: TextButton(
-              onPressed: (){},
-              style: TextButton.styleFrom(
-                textStyle: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
-              ),
-              child:  Text('MUA NGAY',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                  )
+                child: CartSummary(
+                  cart: cart,
+                  onOrderNowPressed: (){
+                    print('An order has been added');
+                  },
+
+                ),
+
+
               ),
             ),
-          ),
-      ],
+
+            Expanded(
+              flex: 1,
+              child: Container(
+                height: 60,
+                child: TextButton(
+                  onPressed: (){},
+                  style: TextButton.styleFrom(
+                    fixedSize: Size(10, 25),
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(0)),
+                    ),
+                    backgroundColor: Colors.red,
+                    textStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  child:  Text('MUA NGAY',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -117,11 +139,11 @@ class _CartSummaryState extends State<CartSummary> {
   @override
   Widget build(BuildContext context){
     return Container(
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.only(right: 10),
       child: Padding(
         padding: const EdgeInsets.all(0),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Row(
               children: [
@@ -132,17 +154,19 @@ class _CartSummaryState extends State<CartSummary> {
                       isAllSelected = value!; // Update the checkbox state when the user taps on it
                     });
                   },
+
                 ),
-                const Text('Thanh toán', style: TextStyle(fontSize: 20),
+                const Text('Tất cả', style: TextStyle(fontSize: 15),
                 ),
               ],
             ),
             const Spacer(),
-            Chip(label: Text('${widget.cart.totalAmount.toStringAsFixed(2)}\ VND',
-              style: Theme.of(context).primaryTextTheme.titleLarge,
-            ),
-              backgroundColor: Theme.of(context).colorScheme.primary,
-            ),
+
+        Text('Tổng: ', style: TextStyle(fontSize: 15),),
+
+        Text('${widget.cart.totalAmount}\ VND',style: TextStyle(fontSize: 20, color: Colors.red),),
+
+
 
           ],
         ),
