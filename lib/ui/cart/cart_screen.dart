@@ -16,7 +16,7 @@ class CartScreen extends StatelessWidget{
       appBar: AppBar(
         leading: BackButton(
           onPressed: (){
-
+            Navigator.of(context).pop();
           },
         ),
         title: const Text('You cart'),
@@ -39,7 +39,9 @@ class CartScreen extends StatelessWidget{
         children: <Widget>[
 
           const SizedBox(height: 10,),
-          Expanded(child: CartItemList(cart),
+          Container(
+          height: 300,
+            child: CartItemList(cart),
           )
         ],
       ),
@@ -95,7 +97,7 @@ class CartItemList extends StatelessWidget {
   }
 }
 
-class CartSummary extends StatelessWidget {
+class CartSummary extends StatefulWidget {
   const CartSummary({
     super.key,
     required this.cart,
@@ -106,6 +108,13 @@ class CartSummary extends StatelessWidget {
   final void Function()? onOrderNowPressed;
 
   @override
+  _CartSummaryState createState() => _CartSummaryState();
+}
+
+class _CartSummaryState extends State<CartSummary> {
+  bool isAllSelected = false; // Declare a variable to store the checkbox state
+
+  @override
   Widget build(BuildContext context){
     return Container(
       margin: const EdgeInsets.all(15),
@@ -114,12 +123,24 @@ class CartSummary extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text('Thanh toán', style: TextStyle(fontSize: 20),
+            Row(
+              children: [
+                Checkbox(
+                  value: isAllSelected, // Set the value of the checkbox
+                  onChanged: (value) {
+                    setState(() {
+                      isAllSelected = value!; // Update the checkbox state when the user taps on it
+                    });
+                  },
+                ),
+                const Text('Thanh toán', style: TextStyle(fontSize: 20),
+                ),
+              ],
             ),
             const Spacer(),
-            Chip(label: Text('${cart.totalAmount.toStringAsFixed(2)}\ VND',
-            style: Theme.of(context).primaryTextTheme.titleLarge,
-              ),
+            Chip(label: Text('${widget.cart.totalAmount.toStringAsFixed(2)}\ VND',
+              style: Theme.of(context).primaryTextTheme.titleLarge,
+            ),
               backgroundColor: Theme.of(context).colorScheme.primary,
             ),
 

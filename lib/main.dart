@@ -3,6 +3,7 @@ import 'package:ct484_project/ui/product_detail_screen.dart';
 import 'package:ct484_project/ui/product_manager.dart';
 import 'package:flutter/material.dart';
 import 'ui/cart/cart_screen.dart';
+import 'ui/orders/orders_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -60,10 +61,10 @@ class MyHomePage extends StatelessWidget {
     return MaterialApp(
 
       home: const SafeArea(
-        child: CartScreen(
+        child: OrdersScreen(),
 
         ),
-      ),
-    );
+      );
+
   }
 }

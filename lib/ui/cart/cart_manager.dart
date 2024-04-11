@@ -1,4 +1,4 @@
-import '../../models/cart.dart';
+import '../../models/cart_item.dart';
 
 class CartManager {
   final Map<String, CartItem> _items = {

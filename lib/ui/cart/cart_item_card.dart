@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../models/cart.dart';
+import '../../models/cart_item.dart';
 import '../shared/dialog_utils.dart';
 
 class CartItemCard extends StatelessWidget {
@@ -44,9 +44,17 @@ class CartItemCard extends StatelessWidget {
   }
 }
 
-class ItemInfoCard extends StatelessWidget {
+class ItemInfoCard extends StatefulWidget {
   const ItemInfoCard(this.cartItem,{super.key});
   final CartItem cartItem;
+
+  @override
+  _ItemInfoCardState createState() => _ItemInfoCardState();
+}
+
+class _ItemInfoCardState extends State<ItemInfoCard> {
+  bool isSelected = false;
+
   @override
   Widget build(BuildContext context){
     return Card(
@@ -57,28 +65,48 @@ class ItemInfoCard extends StatelessWidget {
       child: Padding (
         padding: const EdgeInsets.all(8),
         child: ListTile(
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.network(
-              cartItem.image,
-              fit: BoxFit.cover,
-              width: 80,
-              height: 80,
-            ),
+          leading: Checkbox(
+            value: isSelected, // Set the value of the checkbox
+            onChanged: (value) {
+              setState(() {
+                isSelected = value!; // Update the checkbox state when the user taps on it
+              });
+            },
           ),
-          title: Text(cartItem.title,
-                      style: TextStyle(fontSize: 25,),),
-          subtitle: Text('Giá: ${(cartItem.price )} \ VND',
-                        ),
+          title: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Image.network(
+                  widget.cartItem.image,
+                  fit: BoxFit.cover,
+                  width: 80,
+                  height: 80,
+                ),
+              ),
+              SizedBox(width: 16),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.cartItem.title,
+                    style: TextStyle(fontSize: 25,),),
+                  SizedBox(height: 8),
+                  Text('Giá: ${(widget.cartItem.price )} \ VND',
+                    style: TextStyle(fontSize: 16),),
+                ],
+              ),
+            ],
+          ),
           trailing: Column(
             children: <Widget>[
               Text(
-                'Số lượng: ${ cartItem.quantity}',
+                'Số lượng: ${ widget.cartItem.quantity}',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
 
               Text(
-                'Tổng: ${cartItem.price * cartItem.quantity}\ VND',
+                  'Tổng: ${widget.cartItem.price * widget.cartItem.quantity}\ VND',
                   style: TextStyle(color: Colors.redAccent, fontSize: 16,)
 
               ),
