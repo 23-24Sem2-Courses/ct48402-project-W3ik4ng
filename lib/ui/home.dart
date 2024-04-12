@@ -1,6 +1,5 @@
-import 'package:ct484_project/ui/products/edit_product_screen.dart';
+import 'package:ct484_project/ui/cart/cart_screen.dart';
 import 'package:ct484_project/ui/products/products_grid.dart';
-import 'package:ct484_project/ui/products/products_manager.dart';
 import 'package:ct484_project/ui/users/user_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +15,7 @@ class _HomeState extends State<Home> {
 
   static final List<Widget> _pages = <Widget>[
     const ProductsGrid(),
-    Container(
-      color: Colors.green,
-    ),
+    const CartScreen(),
     const UserScreen(),
   ];
 

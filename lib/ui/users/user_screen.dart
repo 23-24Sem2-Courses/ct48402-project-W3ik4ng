@@ -43,7 +43,9 @@ class UserScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(context, '/orders');
+                        },
                         child: const Text('Xem tất cả đơn hàng >'),
                       )
                     ],
@@ -62,7 +64,9 @@ class UserScreen extends StatelessWidget {
                   'Gian hàng của tôi',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, '/user-products');
+                },
               ),
             )
           ],

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../models/product.dart';
 
 class ProductDetailScreen extends StatefulWidget {
+  static const routeName = '/product-detail-screen';
+
   const ProductDetailScreen(
     this.product, {
     super.key,
@@ -80,6 +82,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             )
           ],
         ),
+      ),
+      bottomNavigationBar: NavigationBar(
+        destinations: [
+          Container(
+            color: Colors.green,
+            height: 80,
+            child: IconButton(
+              icon: Icon(Icons.message, size: 50),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+          Container(
+            color: Colors.green,
+            height: 80,
+            child: IconButton(
+              icon: Icon(Icons.add_shopping_cart, size: 50),
+              color: Colors.white,
+              onPressed: () {},
+            ),
+          ),
+          Container(
+            color: Colors.redAccent,
+            height: 80,
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.all(16.0),
+                textStyle: const TextStyle(fontSize: 20),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'Mua ngay',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

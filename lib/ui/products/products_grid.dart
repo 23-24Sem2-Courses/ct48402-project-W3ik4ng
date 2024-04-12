@@ -2,6 +2,7 @@ import 'package:ct484_project/models/product.dart';
 import 'package:ct484_project/ui/products/product_grid_tile.dart';
 import 'package:ct484_project/ui/products/products_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductsGrid extends StatefulWidget {
   const ProductsGrid({Key? key}) : super(key: key);
@@ -12,11 +13,13 @@ class ProductsGrid extends StatefulWidget {
 
 class _ProductsGridState extends State<ProductsGrid> {
   late _MySearchDelegate _delegate;
+  late Future<void> _fetchProducts;
 
   @override
   void initState() {
     super.initState();
     _delegate = _MySearchDelegate(<String>[]);
+    _fetchProducts = context.read<ProductsManager>().fetchProducts();
   }
 
   @override
@@ -44,16 +47,27 @@ class _ProductsGridState extends State<ProductsGrid> {
         color: Colors.grey,
         child: Container(
           color: Colors.white70,
-          child: GridView.builder(
-            padding: const EdgeInsets.all(10.0),
-            itemCount: products.length,
-            itemBuilder: (context, index) => ProductGridTile(products[index]),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              childAspectRatio: 3 / 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
+          child: FutureBuilder(
+            future: _fetchProducts,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return GridView.builder(
+                  padding: const EdgeInsets.all(10.0),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) =>
+                      ProductGridTile(products[index]),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 4,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
         ),
       ),

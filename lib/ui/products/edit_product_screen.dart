@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/product.dart';
+import '../shared/dialog_utils.dart';
 
 import 'products_manager.dart';
 
@@ -78,18 +79,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
       _isLoading = true;
     });
 
-    // try {
-    //   final productsManager = context.read<ProductsManager>();
-    //   if (_editedProduct.id != null) {
-    //     await productsManager.updateProduct(_editedProduct);
-    //   } else {
-    //     await productsManager.addProduct(_editedProduct);
-    //   }
-    // } catch (error) {
-    //   if (mounted) {
-    //     await showErrorDialog(context, 'Something went wrong');
-    //   }
-    // }
+    try {
+      final productsManager = context.read<ProductsManager>();
+      if (_editedProduct.id != null) {
+        await productsManager.updateProduct(_editedProduct);
+      } else {
+        await productsManager.addProduct(_editedProduct);
+      }
+    } catch (error) {
+      if (mounted) {
+        await showErrorDialog(context, 'Something went wrong');
+      }
+    }
 
     setState(() {
       _isLoading = false;
@@ -241,7 +242,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
         return null;
       },
       onSaved: (value) {
-        // _editedProduct = _editedProduct.copyWith(imageURL: value);
+        _editedProduct = _editedProduct.copyWith(imageUrl: value);
       },
     );
   }

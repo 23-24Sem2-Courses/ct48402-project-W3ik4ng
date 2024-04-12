@@ -19,21 +19,14 @@ class ProductsService extends FirebaseService {
         '$databaseUrl/products.json?auth=$token&$filters',
       ) as Map<String, dynamic>?;
 
-      final userFavoritesMap = await httpFetch(
-        '$databaseUrl/userFavorites/$userId.json?auth=$token',
-      ) as Map<String, dynamic>?;
-
-      // productMap?.forEach((productId, product) {
-      //   final isFavorite = (userFavoritesMap == null)
-      //       ? false
-      //       : (userFavoritesMap[productId] ?? false);
-      //   products.add(
-      //     Product.fromJson({
-      //       'id': productId,
-      //       ...product,
-      //     }).copyWith(isFavorite: isFavorite),
-      //   );
-      // });
+      productMap?.forEach((productId, product) {
+        products.add(
+          Product.fromJson({
+            'id': productId,
+            ...product,
+          }),
+        );
+      });
       return products;
     } catch (error) {
       print(error);

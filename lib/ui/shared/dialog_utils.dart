@@ -5,7 +5,7 @@ Future<bool?> showConfirmDialog(BuildContext context, String message) {
     context: context,
     builder: (ctx) => AlertDialog(
       icon: const Icon(Icons.warning),
-      title: const Text('Are you sure>'),
+      title: const Text('Are you sure?'),
       content: Text(message),
       actions: <Widget>[
         Row(
@@ -28,7 +28,7 @@ Future<bool?> showConfirmDialog(BuildContext context, String message) {
               ),
             ),
           ],
-        )
+        ),
       ],
     ),
   );
@@ -43,7 +43,6 @@ class ActionButton extends StatelessWidget {
 
   final String? actionText;
   final void Function()? onPressed;
-
   @override
   Widget build(BuildContext context) {
     return TextButton(

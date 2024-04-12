@@ -12,9 +12,10 @@ class ProductGridTile extends StatelessWidget {
     return ClipRect(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(product),
-          ));
+          Navigator.of(context).pushNamed(
+            ProductDetailScreen.routeName,
+            arguments: product.id,
+          );
         },
         child: GridTile(
           footer: Container(
