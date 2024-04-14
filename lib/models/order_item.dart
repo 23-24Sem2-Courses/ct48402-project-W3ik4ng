@@ -1,6 +1,6 @@
 import 'cart_item.dart';
 
-class OrderItem{
+class OrderItem {
   final String? id;
   final String title;
   final double amount;
@@ -28,7 +28,7 @@ class OrderItem{
     String? image,
     List<CartItem>? products,
     DateTime? dateTime,
-  }){
+  }) {
     return OrderItem(
       id: id ?? this.id,
       title: title ?? this.title,

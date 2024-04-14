@@ -1,15 +1,26 @@
-import '../../models/cart_item.dart';
+import 'package:ct484_project/services/cart_items_service.dart';
+import 'package:flutter/foundation.dart';
 
-class CartManager {
-  final Map<String, CartItem> _items = {
-    'p1': CartItem(
-      id: 'c1',
-      title: 'Red Shirt',
-      image: 'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-      price: 29.99,
-      quantity: 2,
-    ),
-  };
+import '../../models/auth_token.dart';
+import '../../models/cart_item.dart';
+import '../../models/product.dart';
+
+class CartManager with ChangeNotifier {
+  Map<String, CartItem> _items = {};
+
+  final CartItemsService _cartItemsService;
+
+  CartManager([AuthToken? authToken])
+      : _cartItemsService = CartItemsService(authToken);
+
+  set authToken(AuthToken? authToken) {
+    _cartItemsService.authToken = authToken;
+  }
+
+  Future<void> fetchCartItems() async {
+    _items = await _cartItemsService.fetchItems();
+    notifyListeners();
+  }
 
   int get productCount {
     return _items.length;
@@ -29,5 +40,57 @@ class CartManager {
       total += cartItem.price * cartItem.quantity;
     });
     return total;
+  }
+
+  Future<void> addItem(Product product) async {
+    if (_items.containsKey(product.id)) {
+      await _cartItemsService.updateItem(
+        _items.update(
+          product.id!,
+          (existingCartItem) => existingCartItem.copyWith(
+            quantity: existingCartItem.quantity + 1,
+          ),
+        ),
+      );
+    } else {
+      CartItem newItem = _items.putIfAbsent(
+        product.id!,
+        () => CartItem(
+            id: 'c${DateTime.now().toIso8601String()}',
+            title: product.title,
+            imageUrl: product.imageUrl,
+            quantity: 1,
+            price: product.price),
+      );
+      await _cartItemsService.addItem(product.id!, newItem);
+    }
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    if (!_items.containsKey(productId)) {
+      return;
+    }
+    if (_items[productId]?.quantity as num > 1) {
+      _items.update(
+        productId,
+        (existingCartItem) => existingCartItem.copyWith(
+          quantity: existingCartItem.quantity - 1,
+        ),
+      );
+    } else {
+      _items.remove(productId);
+    }
+    notifyListeners();
+  }
+
+  void clearItem(String productId) {
+    _items.remove(productId);
+    notifyListeners();
+  }
+
+  void clearAllItems() {
+    _items = {};
+    notifyListeners();
   }
 }

@@ -69,7 +69,7 @@ class _ItemInfoCardState extends State<ItemInfoCard> {
         child: ListTile(
           leading: Container(
             width:
-                0, // Set the width of the leading container to the width of the checkbox
+                10, // Set the width of the leading container to the width of the checkbox
             child: Column(
               children: [
                 Checkbox(
@@ -93,7 +93,7 @@ class _ItemInfoCardState extends State<ItemInfoCard> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
-                    widget.cartItem.image,
+                    widget.cartItem.imageUrl,
                     fit: BoxFit.cover,
                     width: 60,
                     height: 80,

@@ -24,8 +24,9 @@ class _ProductsGridState extends State<ProductsGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final productsManager = ProductsManager();
-    final products = productsManager.items;
+    final products = context.select<ProductsManager, List<Product>>(
+      (productsManager) => productsManager.items,
+    );
 
     return Scaffold(
       appBar: AppBar(

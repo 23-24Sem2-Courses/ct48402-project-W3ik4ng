@@ -1,4 +1,6 @@
+import 'package:ct484_project/ui/cart/cart_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../models/product.dart';
 
@@ -46,66 +48,174 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Image.network(widget.product.imageUrl, fit: BoxFit.cover),
             ),
             const SizedBox(height: 10),
-            Text(
-              '\$${widget.product.price}',
-              style: const TextStyle(color: Colors.red, fontSize: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  height: 80,
+                  child: Image.network(widget.product.imageUrl),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  height: 80,
+                  child: Image.network(widget.product.imageUrl),
+                ),
+                const SizedBox(width: 10),
+                Container(
+                  height: 80,
+                  child: Image.network(widget.product.imageUrl),
+                ),
+                const SizedBox(width: 10),
+              ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
-                widget.product.description,
-                textAlign: TextAlign.center,
+                ' ${widget.product.price} \ VND',
+                textAlign: TextAlign.start,
+                softWrap: true,
+                style: const TextStyle(color: Colors.red, fontSize: 20),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Text(
+                ' ${widget.product.description}',
+                textAlign: TextAlign.start,
                 softWrap: true,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Container(
+              color: Colors.grey[100],
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              alignment: Alignment.centerLeft,
+              child: Row(children: [
+                Text('  4.7 '),
+                Icon(
+                  Icons.star,
+                  color: Colors.yellow,
+                ),
+                Text(' | Đã bán: 2,2k')
+              ]),
+            ),
+            const SizedBox(height: 10),
+            Column(
               children: [
-                Row(children: [
-                  SizedBox(
-                    width: 100,
-                    child: _buildAmountField(),
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.shopping_cart,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                        height: 80,
+                        child: ClipOval(
+                          child: Image.network(widget.product.imageUrl),
+                        )),
+                    const SizedBox(width: 10),
+                    Column(
+                      children: [
+                        Text('Quần áo Cần Thơ', style: TextStyle(fontSize: 17)),
+                        Text('Online 55 phút trước',
+                            style: TextStyle(color: Colors.grey)),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: Colors.grey,
+                            ),
+                            Text(
+                              'Cần Thơ',
+                              style: TextStyle(color: Colors.grey),
+                              textAlign: TextAlign.start,
+                            ),
+                          ],
+                        )
+                      ],
                     ),
-                    onPressed: _onAddToCartPressed,
-                    color: Theme.of(context).colorScheme.secondary,
-                  )
-                ])
+                    const Spacer(),
+                    Container(
+                      margin: EdgeInsets.only(right: 10),
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          side: BorderSide(color: Colors.redAccent),
+                          foregroundColor: Colors.redAccent,
+                          padding: const EdgeInsets.all(16.0),
+                          textStyle: const TextStyle(fontSize: 15),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'Xem Shop >',
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          '103 ',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        Text('Sản phẩm'),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '500 ',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        Text('Đánh giá'),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '90% ',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        Text('Phản hồi'),
+                      ],
+                    ),
+                  ],
+                ),
               ],
-            )
+            ),
           ],
         ),
       ),
       bottomNavigationBar: NavigationBar(
+        height: 50,
         destinations: [
           Container(
             color: Colors.green,
-            height: 80,
+            height: 50,
             child: IconButton(
-              icon: Icon(Icons.message, size: 50),
+              icon: Icon(Icons.add_shopping_cart, size: 40),
               color: Colors.white,
-              onPressed: () {},
-            ),
-          ),
-          Container(
-            color: Colors.green,
-            height: 80,
-            child: IconButton(
-              icon: Icon(Icons.add_shopping_cart, size: 50),
-              color: Colors.white,
-              onPressed: () {},
+              onPressed: _onAddToCartPressed,
             ),
           ),
           Container(
             color: Colors.redAccent,
-            height: 80,
+            height: 50,
             child: TextButton(
               style: TextButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -124,25 +234,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   }
 
   void _onAddToCartPressed() {
-    //   final cart = context.read<CartManager>();
-    //   int amount = int.tryParse(_amountController.text) ?? 1;
-    //   cart.addMultiple(widget.product, amount);
-    //   ScaffoldMessenger.of(context)
-    //     ..hideCurrentSnackBar()
-    //     ..showSnackBar(
-    //       SnackBar(
-    //         content: const Text(
-    //           'Item added to cart',
-    //         ),
-    //         duration: const Duration(seconds: 2),
-    //         action: SnackBarAction(
-    //           label: 'UNDO',
-    //           onPressed: () {
-    //             cart.removeItem(widget.product.id!);
-    //           },
-    //         ),
-    //       ),
-    //     );
+    final cart = context.read<CartManager>();
+    cart.addItem(widget.product);
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          content: const Text(
+            'Item added to cart',
+          ),
+          duration: const Duration(seconds: 2),
+          action: SnackBarAction(
+            label: 'UNDO',
+            onPressed: () {
+              cart.removeItem(widget.product.id!);
+            },
+          ),
+        ),
+      );
   }
 
   TextFormField _buildAmountField() {

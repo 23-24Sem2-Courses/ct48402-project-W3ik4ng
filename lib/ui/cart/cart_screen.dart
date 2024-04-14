@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'cart_manager.dart';
 import 'cart_item_card.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({
     super.key,
   });
 
   @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  late Future<void> _fetchItems;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _fetchItems = context.read<CartManager>().fetchCartItems();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cart = CartManager();
+    final cart = context.watch<CartManager>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('You cart'),
@@ -26,20 +41,30 @@ class CartScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 120,
-            child: CartItemList(cart),
-          )
-        ],
+      body: FutureBuilder(
+        future: _fetchItems,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  height: 120,
+                  child: CartItemList(cart),
+                )
+              ],
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(0),
-        height: 60,
+        height: 50,
         child: Row(
           children: [
             Expanded(
@@ -62,7 +87,7 @@ class CartScreen extends StatelessWidget {
             Expanded(
               flex: 1,
               child: Container(
-                height: 60,
+                height: 50,
                 child: TextButton(
                   onPressed: () {},
                   style: TextButton.styleFrom(

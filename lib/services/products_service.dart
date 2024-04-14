@@ -39,12 +39,10 @@ class ProductsService extends FirebaseService {
       final newProduct = await httpFetch(
         '$databaseUrl/products.json?auth=$token',
         method: HttpMethod.post,
-        body: jsonEncode(
-          product.toJson()
-            ..addAll({
-              'creatorId': userId,
-            }),
-        ),
+        body: jsonEncode(product.toJson()
+          ..addAll({
+            'creatorId': userId,
+          })),
       ) as Map<String, dynamic>?;
 
       return product.copyWith(

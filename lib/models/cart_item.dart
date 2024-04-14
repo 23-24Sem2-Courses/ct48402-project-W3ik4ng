@@ -1,14 +1,14 @@
 class CartItem {
   final String id;
   final String title;
-  final String image;
+  final String imageUrl;
   final int quantity;
   final double price;
 
   CartItem({
     required this.id,
     required this.title,
-    required this.image,
+    required this.imageUrl,
     required this.quantity,
     required this.price,
   });
@@ -16,16 +16,35 @@ class CartItem {
   CartItem copyWith({
     String? id,
     String? title,
-    String? image,
+    String? imageUrl,
     int? quantity,
     double? price,
-  }){
+  }) {
     return CartItem(
       id: id ?? this.id,
       title: title ?? this.title,
-      image: image ?? this.image,
+      imageUrl: imageUrl ?? this.imageUrl,
       quantity: quantity ?? this.quantity,
       price: price ?? this.price,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'quantity': quantity,
+      'price': price,
+      'imageUrl': imageUrl,
+    };
+  }
+
+  static CartItem fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      id: json['cartItemId'],
+      title: json['title'],
+      quantity: json['quantity'],
+      price: json['price'],
+      imageUrl: json['imageUrl'],
     );
   }
 }
