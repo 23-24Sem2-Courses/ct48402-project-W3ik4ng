@@ -1,3 +1,4 @@
+import 'package:ct484_project/ui/orders/orders_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +19,6 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _fetchItems = context.read<CartManager>().fetchCartItems();
   }
@@ -26,6 +26,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     final cart = context.watch<CartManager>();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('You cart'),
@@ -89,7 +90,14 @@ class _CartScreenState extends State<CartScreen> {
               child: Container(
                 height: 50,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: cart.totalAmount <= 0
+                      ? null
+                      : () {
+                          context
+                              .read<OrderManager>()
+                              .addOrder(cart.products, cart.totalAmount);
+                          cart.clearAllItems();
+                        },
                   style: TextButton.styleFrom(
                     fixedSize: Size(10, 25),
                     shape: const RoundedRectangleBorder(

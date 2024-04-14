@@ -1,27 +1,21 @@
+import 'package:ct484_project/models/auth_token.dart';
+import 'package:ct484_project/services/order_items_service.dart';
+import 'package:flutter/foundation.dart';
+
 import '../../models/cart_item.dart';
 import '../../models/order_item.dart';
 
-class OrdersManager {
-  final List<OrderItem> _orders = [
-    OrderItem(
-      id: 'o1',
-      amount: 59.98 + 29.99,
-      title: 'Red Shirt',
-      image:
-          'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-      products: [
-        CartItem(
-          id: 'c1',
-          title: 'Red Shirt',
-          imageUrl:
-              'https://cdn.pixabay.com/photo/2016/10/02/22/17/red-t-shirt-1710578_1280.jpg',
-          price: 29.99,
-          quantity: 3,
-        )
-      ],
-      dateTime: DateTime.now(),
-    )
-  ];
+class OrderManager with ChangeNotifier {
+  List<OrderItem> _orders = [];
+
+  final OrderItemsService _orderItemsService;
+
+  OrderManager([AuthToken? authToken])
+      : _orderItemsService = OrderItemsService(authToken);
+
+  set authToken(AuthToken? authToken) {
+    _orderItemsService.authToken = authToken;
+  }
 
   int get orderCount {
     return _orders.length;
@@ -29,5 +23,23 @@ class OrdersManager {
 
   List<OrderItem> get orders {
     return [..._orders];
+  }
+
+  Future<void> fetchOrders() async {
+    _orders = await _orderItemsService.fetchProducts();
+    notifyListeners();
+  }
+
+  Future<void> addOrder(List<CartItem> cartProducts, double total) async {
+    final newOrder = await _orderItemsService.addOrder(
+      OrderItem(
+        id: 'o${DateTime.now().toIso8601String()}',
+        amount: total,
+        products: cartProducts,
+        dateTime: DateTime.now(),
+      ),
+    );
+    _orders.insert(0, newOrder!);
+    notifyListeners();
   }
 }

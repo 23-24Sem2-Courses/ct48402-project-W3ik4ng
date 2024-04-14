@@ -3,6 +3,7 @@ import 'package:ct484_project/ui/auth/auth_manager.dart';
 import 'package:ct484_project/ui/auth/auth_screen.dart';
 import 'package:ct484_project/ui/cart/cart_manager.dart';
 import 'package:ct484_project/ui/home.dart';
+import 'package:ct484_project/ui/orders/orders_manager.dart';
 import 'package:ct484_project/ui/orders/orders_screen.dart';
 import 'package:ct484_project/ui/products/edit_product_screen.dart';
 import 'package:ct484_project/ui/products/product_detail_screen.dart';
@@ -44,9 +45,13 @@ class MyApp extends StatelessWidget {
             return cartManager;
           },
         ),
-        // ChangeNotifierProvider(
-        //   create: (ctx) => OrderManager(),
-        // ),
+        ChangeNotifierProxyProvider<AuthManager, OrderManager>(
+          create: (ctx) => OrderManager(),
+          update: (ctx, authManager, orderManager) {
+            orderManager!.authToken = authManager.authToken;
+            return orderManager;
+          },
+        ),
       ],
       child: Consumer<AuthManager>(
         builder: (ctx, authManager, child) {

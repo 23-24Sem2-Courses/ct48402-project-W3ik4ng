@@ -49,4 +49,14 @@ class CartItem {
       )
     };
   }
+
+  static CartItem fromOrderJson(String cartItemId, Map<String, dynamic> json) {
+    return CartItem(
+      id: cartItemId,
+      title: json['title'],
+      quantity: json['quantity'],
+      price: json['price'],
+      imageUrl: json['imageUrl'],
+    );
+  }
 }
