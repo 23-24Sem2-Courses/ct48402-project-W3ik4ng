@@ -38,13 +38,15 @@ class CartItem {
     };
   }
 
-  static CartItem fromJson(Map<String, dynamic> json) {
-    return CartItem(
-      id: json['cartItemId'],
-      title: json['title'],
-      quantity: json['quantity'],
-      price: json['price'],
-      imageUrl: json['imageUrl'],
-    );
+  static Map<String, CartItem> fromJson(Map<String, dynamic> json) {
+    return {
+      json['productId']: CartItem(
+        id: json['id'],
+        title: json['title'],
+        quantity: json['quantity'],
+        price: json['price'],
+        imageUrl: json['imageUrl'],
+      )
+    };
   }
 }

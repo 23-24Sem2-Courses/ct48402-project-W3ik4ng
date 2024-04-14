@@ -118,7 +118,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           child: Image.network(widget.product.imageUrl),
                         )),
                     const SizedBox(width: 10),
-                    Column(
+                    const Column(
                       children: [
                         Text('Quần áo Cần Thơ', style: TextStyle(fontSize: 17)),
                         Text('Online 55 phút trước',
@@ -140,10 +140,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                     const Spacer(),
                     Container(
-                      margin: EdgeInsets.only(right: 10),
+                      margin: const EdgeInsets.only(right: 10),
                       child: TextButton(
                         style: TextButton.styleFrom(
-                          side: BorderSide(color: Colors.redAccent),
+                          side: const BorderSide(color: Colors.redAccent),
                           foregroundColor: Colors.redAccent,
                           padding: const EdgeInsets.all(16.0),
                           textStyle: const TextStyle(fontSize: 15),
@@ -156,10 +156,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Row(
+                const Row(
                   children: [
                     Row(
                       children: [
@@ -208,7 +208,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: Colors.green,
             height: 50,
             child: IconButton(
-              icon: Icon(Icons.add_shopping_cart, size: 40),
+              icon: const Icon(Icons.add_shopping_cart, size: 40),
               color: Colors.white,
               onPressed: _onAddToCartPressed,
             ),
@@ -239,17 +239,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Item added to cart',
+        const SnackBar(
+          content: Text(
+            'Item added to cart successfully',
           ),
-          duration: const Duration(seconds: 2),
-          action: SnackBarAction(
-            label: 'UNDO',
-            onPressed: () {
-              cart.removeItem(widget.product.id!);
-            },
-          ),
+          duration: Duration(seconds: 2),
+          // action: SnackBarAction(
+          //   label: 'UNDO',
+          //   onPressed: () {
+          //     cart.removeItem(widget.product.id!);
+          //   },
+          // ),
         ),
       );
   }

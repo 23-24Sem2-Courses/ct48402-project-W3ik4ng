@@ -67,24 +67,28 @@ class CartManager with ChangeNotifier {
     notifyListeners();
   }
 
-  void removeItem(String productId) {
-    if (!_items.containsKey(productId)) {
-      return;
-    }
-    if (_items[productId]?.quantity as num > 1) {
-      _items.update(
-        productId,
-        (existingCartItem) => existingCartItem.copyWith(
-          quantity: existingCartItem.quantity - 1,
-        ),
-      );
-    } else {
-      _items.remove(productId);
-    }
-    notifyListeners();
-  }
+  // Future<void> removeItem(String productId) async {
+  //   if (!_items.containsKey(productId)) {
+  //     return;
+  //   }
+  //   if (_items[productId]?.quantity as num > 1) {
+  //     await _cartItemsService.updateItem(
+  //       _items.update(
+  //         productId,
+  //         (existingCartItem) => existingCartItem.copyWith(
+  //           quantity: existingCartItem.quantity - 1,
+  //         ),
+  //       ),
+  //     );
+  //   } else {
+  //     _items.remove(productId);
+  //     _cartItemsService.removeItem(productId);
+  //   }
+  //   notifyListeners();
+  // }
 
-  void clearItem(String productId) {
+  void clearItem(String productId, itemId) {
+    _cartItemsService.removeItem(itemId);
     _items.remove(productId);
     notifyListeners();
   }

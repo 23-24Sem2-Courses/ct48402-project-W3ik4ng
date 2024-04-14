@@ -1,9 +1,6 @@
 import 'dart:convert';
 
 import 'package:ct484_project/models/cart_item.dart';
-import 'package:ct484_project/ui/cart/cart_manager.dart';
-
-import '../models/product.dart';
 import '../models/auth_token.dart';
 
 import 'firebase_sevice.dart';
@@ -12,27 +9,26 @@ class CartItemsService extends FirebaseService {
   CartItemsService([AuthToken? authToken]) : super(authToken);
 
   Future<Map<String, CartItem>> fetchItems() async {
-    final Map<String, CartItem> itemsMap = {};
-    // final Map<String, CartItem> items = {};
+    final Map<String, CartItem> items = {};
 
     try {
-      // final filters = 'orderBy="creatorId"&equalTo="$userId"';
-
       final productMap = await httpFetch(
         '$databaseUrl/cartItems.json?auth=$token',
       ) as Map<String, dynamic>?;
 
-      productMap?.forEach((productId, item) {
-        print(item);
-        CartItem cartItem = CartItem.fromJson(item);
-        print(cartItem);
-        itemsMap[productId] = cartItem;
+      productMap?.forEach((cartItemId, item) {
+        items.addAll(
+          CartItem.fromJson({
+            'id': cartItemId,
+            ...item,
+          }),
+        );
       });
 
-      return itemsMap;
+      return items;
     } catch (error) {
       print(error);
-      return itemsMap;
+      return items;
     }
   }
 
@@ -69,10 +65,10 @@ class CartItemsService extends FirebaseService {
     }
   }
 
-  Future<bool> deleteProduct(String id) async {
+  Future<bool> removeItem(String id) async {
     try {
       await httpFetch(
-        '$databaseUrl/products/$id.json?auth=$token',
+        '$databaseUrl/cartItems/$id.json?auth=$token',
         method: HttpMethod.delete,
       );
 
