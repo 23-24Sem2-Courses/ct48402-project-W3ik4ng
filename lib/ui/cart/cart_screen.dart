@@ -52,7 +52,7 @@ class _CartScreenState extends State<CartScreen> {
                   height: 10,
                 ),
                 Container(
-                  height: 120,
+                  height: 500,
                   child: CartItemList(cart),
                 )
               ],

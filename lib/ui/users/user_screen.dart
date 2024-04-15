@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../auth/auth_manager.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({super.key});
@@ -10,10 +12,11 @@ class UserScreen extends StatelessWidget {
       child: Container(
         color: Colors.white70,
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Container(
               color: Colors.white,
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.all(20),
               child: Column(
                 children: <Widget>[
                   const Row(
@@ -34,8 +37,10 @@ class UserScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   Row(
+                    mainAxisSize: MainAxisSize.max,
+
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       const Text(
@@ -59,18 +64,49 @@ class UserScreen extends StatelessWidget {
               width: double.infinity,
               height: 30,
               padding: const EdgeInsets.all(5),
+
               child: GestureDetector(
-                child: const Text(
-                  'Gian hàng của tôi',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                child: Row(
+                    children: [ Text(
+                      'Gian hàng của tôi ',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.start,
+                    ),
+                      Icon(Icons.remove_red_eye),
+                      Spacer(),
+                      Text(
+                        'Xem >',
+                        textAlign: TextAlign.end,
+                      ),
+                    ]
                 ),
                 onTap: () {
                   Navigator.pushNamed(context, '/user-products');
                 },
               ),
-            )
+            ),
+            const SizedBox(height: 429,),
+
+
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(5),
+              width: double.infinity,
+              child: GestureDetector(
+                child: Text('Đăng xuất',
+                  style: TextStyle(fontSize: 20),
+                  textAlign: TextAlign.center,
+                ),
+                onTap: () {
+                  Navigator.of(context).pushNamed('/');
+                  context.read<AuthManager>().logout();
+                },
+              ),
+            ),
+
           ],
         ),
+
       ),
     );
   }

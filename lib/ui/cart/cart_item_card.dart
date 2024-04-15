@@ -110,7 +110,7 @@ class _ItemInfoCardState extends State<ItemInfoCard> {
                   Text(
                     widget.cartItem.title,
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 15,
                     ),
                   ),
                   SizedBox(height: 8),
