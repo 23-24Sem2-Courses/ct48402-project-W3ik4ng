@@ -13,7 +13,7 @@ class CartItemsService extends FirebaseService {
 
     try {
       final productMap = await httpFetch(
-        '$databaseUrl/cartItems.json?auth=$token',
+        '$databaseUrl/cartItems.json?auth=$token&orderBy="creatorId"&equalTo="$userId"',
       ) as Map<String, dynamic>?;
 
       productMap?.forEach((cartItemId, item) {
@@ -71,6 +71,28 @@ class CartItemsService extends FirebaseService {
         '$databaseUrl/cartItems/$id.json?auth=$token',
         method: HttpMethod.delete,
       );
+
+      return true;
+    } catch (error) {
+      print(error);
+      return false;
+    }
+  }
+
+  Future<bool> removeAllItems() async {
+    try {
+      final productMap = await httpFetch(
+        '$databaseUrl/cartItems.json?auth=$token&orderBy="creatorId"&equalTo="$userId"',
+      ) as Map<String, dynamic>?;
+
+      if (productMap != null) {
+        Future.forEach(productMap.keys, (id) async {
+          await httpFetch(
+            '$databaseUrl/cartItems/$id.json?auth=$token',
+            method: HttpMethod.delete,
+          );
+        });
+      }
 
       return true;
     } catch (error) {

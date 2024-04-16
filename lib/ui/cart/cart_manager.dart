@@ -94,6 +94,7 @@ class CartManager with ChangeNotifier {
   }
 
   void clearAllItems() {
+    _cartItemsService.removeAllItems();
     _items = {};
     notifyListeners();
   }
